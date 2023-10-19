@@ -178,23 +178,30 @@ function downloadMergedSVG() {
 
     if (!mainSVG || !textSVG) return;
 
+    // Get bounding box of both SVGs
+    const mainBBox = mainSVG.getBoundingClientRect();
+    const textBBox = textSVG.getBoundingClientRect();
+
+    // Compute minimum and maximum coordinates
+    const minX = Math.min(mainBBox.left, textBBox.left);
+    const minY = Math.min(mainBBox.top, textBBox.top);
+    const maxX = Math.max(mainBBox.right, textBBox.right);
+    const maxY = Math.max(mainBBox.bottom, textBBox.bottom);
+
+    // Calculate width and height of the combined SVG content
+    const combinedWidth = maxX - minX;
+    const combinedHeight = maxY - minY;
+
     // Clone the main SVG so we don't modify the original
     const clonedSVG = mainSVG.cloneNode(true);
-
-    // Adjust the positioning of the text SVG based on its position within the container
-    const rect = textSVGContainer.getBoundingClientRect();
-    const svgRect = mainSVG.getBoundingClientRect();
-    textSVG.setAttribute('x', rect.left - svgRect.left);
-    textSVG.setAttribute('y', rect.top - svgRect.top);
-
+    
     // Append the text SVG to the cloned main SVG
     clonedSVG.appendChild(textSVG.cloneNode(true));
 
     // Set the dimensions and viewBox of the cloned SVG
-    const combinedHeight = svgRect.height + rect.height;
-    clonedSVG.setAttribute('width', '500');
+    clonedSVG.setAttribute('width', combinedWidth.toString());
     clonedSVG.setAttribute('height', combinedHeight.toString());
-    clonedSVG.setAttribute('viewBox', `0 0 500 ${combinedHeight}`);
+    clonedSVG.setAttribute('viewBox', `0 0 ${combinedWidth} ${combinedHeight}`);
 
     // Create a blob with the SVG data
     const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
