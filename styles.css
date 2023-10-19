@@ -18,7 +18,6 @@ body {
 .svg-container {
     width: 100%;
     min-height: 300px;
-    max-height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,3 +204,4 @@ button:hover {
     height: 50px;
     overflow: hidden;
 }
+
