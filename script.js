@@ -172,19 +172,25 @@ function applyColorToTextSVG(color) {
 function downloadMergedSVG() {
     // Get the main SVG and the text SVG
     const mainSVG = document.querySelector('.svg-container svg');
-    const textSVGContainer = document.querySelector('.text-svg-container');
+    const textSVGContainer = document.querySelector('.svg-container .text-svg-container');
+    const textSVG = textSVGContainer.querySelector('svg');
 
-    if (!mainSVG || !textSVGContainer) return;
+    if (!mainSVG || !textSVG) return;
 
     // Clone the main SVG so we don't modify the original
     const clonedSVG = mainSVG.cloneNode(true);
 
+    // Adjust the positioning of the text SVG based on its position within the container
+    const rect = textSVGContainer.getBoundingClientRect();
+    const svgRect = mainSVG.getBoundingClientRect();
+    textSVG.setAttribute('x', rect.left - svgRect.left);
+    textSVG.setAttribute('y', rect.top - svgRect.top);
+
     // Append the text SVG to the cloned main SVG
-    const textSVG = textSVGContainer.querySelector('svg').cloneNode(true);
-    clonedSVG.appendChild(textSVG);
+    clonedSVG.appendChild(textSVG.cloneNode(true));
 
     // Create a blob with the SVG data
-    const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml'});
+    const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
     const url = URL.createObjectURL(blob);
 
     // Create a temporary anchor element to initiate the download
