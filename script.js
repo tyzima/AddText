@@ -189,6 +189,12 @@ function downloadMergedSVG() {
     // Append the text SVG to the cloned main SVG
     clonedSVG.appendChild(textSVG.cloneNode(true));
 
+    // Set the dimensions and viewBox of the cloned SVG
+    const combinedHeight = svgRect.height + rect.height;
+    clonedSVG.setAttribute('width', '500');
+    clonedSVG.setAttribute('height', combinedHeight.toString());
+    clonedSVG.setAttribute('viewBox', `0 0 500 ${combinedHeight}`);
+
     // Create a blob with the SVG data
     const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
     const url = URL.createObjectURL(blob);
