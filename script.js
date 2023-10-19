@@ -188,6 +188,8 @@ function downloadMergedSVG() {
 
     // Clone the main SVG so we don't modify the original
     const clonedSVG = mainSVG.cloneNode(true);
+    clonedSVG.setAttribute('width', '100%');
+    clonedSVG.setAttribute('height', '100%');
 
     // Clone the text SVG and adjust its x and y attributes
     const clonedTextSVG = textSVG.cloneNode(true);
