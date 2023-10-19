@@ -17,6 +17,7 @@ body {
 
 .svg-container {
     width: 100%;
+    min-width: 400px;
     min-height: 300px;
     display: flex;
     justify-content: center;
