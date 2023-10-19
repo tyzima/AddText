@@ -168,6 +168,31 @@ function applyColorToTextSVG(color) {
     }
 }
 
+function centerTextSVG() {
+    const mainSVG = document.querySelector('.svg-container svg');
+    const textSVGContainer = document.querySelector('.svg-container .text-svg-container');
+    const textSVG = textSVGContainer.querySelector('svg');
+
+    if (!mainSVG || !textSVG) return;
+
+    // Calculate the center of the main SVG
+    const mainCenterX = mainSVG.getBoundingClientRect().width / 2;
+    const mainCenterY = mainSVG.getBoundingClientRect().height / 2;
+
+    // Calculate the center of the text SVG
+    const textCenterX = textSVG.getBoundingClientRect().width / 2;
+    const textCenterY = textSVG.getBoundingClientRect().height / 2;
+
+    // Calculate the position adjustments needed to center the text SVG
+    const offsetX = mainCenterX - textCenterX;
+    const offsetY = mainCenterY - textCenterY;
+
+    // Apply the adjustments to the text SVG container
+    textSVGContainer.style.left = `${offsetX}px`;
+    textSVGContainer.style.top = `${offsetY}px`;
+}
+
+
 
 function downloadMergedSVG() {
     // Get the main SVG and the text SVG
