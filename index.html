@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="svg-container" id="svgContainer"></div>
+        <div class="buttons">
+            <button onclick="loadTextSVG(1)">Text 1</button>
+            <button onclick="loadTextSVG(2)">Text 2</button>
+            <button onclick="loadTextSVG(3)">Text 3</button>
+            <button onclick="loadTextSVG(4)">Text 4</button>
+            <button onclick="loadTextSVG(5)">Text 5</button>
+        </div>
+        <div class="swatches">
+<div class="color" style="background-color: #FF5733;" onclick="changeColor('#FF5733')"></div>
+<div class="color" style="background-color: #33FF57;" onclick="changeColor('#33FF57')"></div>
+<div class="color" style="background-color: #5733FF;" onclick="changeColor('#5733FF')"></div>
+<div class="color" style="background-color: #33F0FF;" onclick="changeColor('#33F0FF')"></div>
+<div class="color" style="background-color: #FF33D4;" onclick="changeColor('#FF33D4')"></div>
+        </div>
+        <button onclick="downloadSVG()">Download</button>
+    </div>
+    <script src="node_modules/svg.js/dist/svg.min.js"></script>
+    <script src="app.js"></script>
+    <script src="node_modules/svg.draggable.js/dist/svg.draggable.js"></script>
+    <script src="node_modules/svg.resize.js/dist/svg.resize.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
