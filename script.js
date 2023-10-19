@@ -168,7 +168,6 @@ function applyColorToTextSVG(color) {
     }
 }
 
-document.getElementById('downloadBtn').addEventListener('click', downloadMergedSVG);
 
 function downloadMergedSVG() {
     // Get the main SVG and the text SVG
