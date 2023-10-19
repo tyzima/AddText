@@ -1,5 +1,5 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,48 +8,199 @@ body {
 }
 
 .container {
-    width: 400px;
-    padding: 20px;
+    width: 900px;
     background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .svg-container {
-    width: 300px;
-    height: 300px;
-    margin: 20px 0;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: #eee;
-    position: relative;
-}
-
-.buttons, .swatches {
+    width: 100%;
+    min-height: 300px;
     display: flex;
-    gap: 10px;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    padding: 20px;
 }
 
-/* ... existing styles ... */
+.sliders {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
 
-.color {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+.slider-group {
+    flex-basis: 30%;
+}
+
+.slider-group label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="range"] {
+    width: 100%;
     cursor: pointer;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: #d3d3d3;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007BFF;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    background: #0056b3;
+}
+
+
+.text-svg-container {
+    position: absolute;
+}
+
+
+.buttons, .color-swatches {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.resizer {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #007BFF;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: se-resize;
 }
 
 
 button {
-    padding: 8px 12px;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background-color: #007BFF;
     color: white;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #0056b3;
+}
+
+.download-button {
+    display: block;
+    margin: 20px auto 0;
+    background-color: #28a745;
+}
+
+.download-button:hover {
+    background-color: #218838;
+}
+
+
+#colorPickerBtn {
+    display: block;
+    margin: 20px auto;
+    background-color: #CD5A13;
+    transition: background-color 0.3s;
+}
+
+#colorPickerBtn:hover {
+    background-color: #a64110;
+}
+
+.color-popup {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    overflow-y: auto;
+    opacity: 0; /* Set initial opacity to 0 */
+    pointer-events: none; /* Ensure it doesn't interfere with clicks when hidden */
+    transition: opacity 0.3s ease; /* Set a transition for the opacity */
+}
+
+.color-popup.active {
+    display: block; /* Override the display: none from the base style */
+    opacity: 1; /* Make it fully visible */
+    pointer-events: auto; /* Allow it to be interacted with */
+}
+
+.color-popup li {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.color-popup li:hover {
+    transform: scale(1.2);
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position the tooltip above the text */
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.color-popup li:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;  /* This ensures that if there isn't enough space, the buttons will wrap to the next line */
+    gap: 10px;  /* Space between the buttons */
+}
+
+
+.svg-btn {
+    border: none;
+    padding: 10;
+    background: transparent;
+    cursor: pointer;
+}
+
+.svg-preview {
+    width: 100px;  /* Adjust based on your preference */
+    height: 50px;
+    overflow: hidden;
 }

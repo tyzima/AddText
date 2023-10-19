@@ -8,29 +8,82 @@
 </head>
 <body>
     <div class="container">
-        <div class="svg-container" id="svgContainer"></div>
+        <div class="svg-container" id="svgContainer">
+            <!-- SVG logo will be loaded here -->
+        </div>
         <div class="buttons">
-            <button onclick="loadTextSVG(1)">Text 1</button>
-            <button onclick="loadTextSVG(2)">Text 2</button>
-            <button onclick="loadTextSVG(3)">Text 3</button>
-            <button onclick="loadTextSVG(4)">Text 4</button>
-            <button onclick="loadTextSVG(5)">Text 5</button>
+            <button onclick="loadTextSVG(1)" class="svg-btn">
+                <img src="/text1.svg" alt="Text 1 Preview" class="svg-preview" id="btnPreview1" />
+            </button>
+            <button onclick="loadTextSVG(2)" class="svg-btn">
+                <img src="/text2.svg" alt="Text 2 Preview" class="svg-preview" id="btnPreview2" />
+            </button>
+            <button onclick="loadTextSVG(3)" class="svg-btn">
+                <img src="/text3.svg" alt="Text 3 Preview" class="svg-preview" id="btnPreview3" />
+            </button>
+            <button onclick="loadTextSVG(4)" class="svg-btn">
+                <img src="/text4.svg" alt="Text 4 Preview" class="svg-preview" id="btnPreview4" />
+            </button>
+            <button onclick="loadTextSVG(5)" class="svg-btn">
+                <img src="/text5.svg" alt="Text 5 Preview" class="svg-preview" id="btnPreview5" />
+            </button>
         </div>
-        <div class="swatches">
-<div class="color" style="background-color: #FF5733;" onclick="changeColor('#FF5733')"></div>
-<div class="color" style="background-color: #33FF57;" onclick="changeColor('#33FF57')"></div>
-<div class="color" style="background-color: #5733FF;" onclick="changeColor('#5733FF')"></div>
-<div class="color" style="background-color: #33F0FF;" onclick="changeColor('#33F0FF')"></div>
-<div class="color" style="background-color: #FF33D4;" onclick="changeColor('#FF33D4')"></div>
+        
+        <div class="sliders">
+            <div class="slider-group">
+                <label>Size</label>
+                <input type="range" id="sizeSlider" min="50" max="400" value="100">
+            </div>
+            <div class="slider-group">
+                <label>Longitude (Lat)</label>
+                <input type="range" id="latSlider" min="0" max="900" value="450">
+            </div>
+            <div class="slider-group">
+                <label>Latitude (Long)</label>
+                <input type="range" id="longSlider" min="0" max="500" value="250">
+            </div>
         </div>
-        <button onclick="downloadSVG()">Download</button>
-    </div>
-    <script src="node_modules/@svgdotjs/svg.js/dist/svg.js"></script>
-    <script src="node_modules/@svgdotjs/svg.draggable.js/dist/svg.draggable.js"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.resize/2.1.0/svg.resize.min.js"></script>
-    <script src="app.js" defer></script>
-</body>
-</html>
+        <div class="button-container">
+        <button id="colorPickerBtn">Choose Color</button>
 
+<div id="colorPopup" class="color-popup">
+    <li data-color-name="White" style="background-color: #ffffff;"></li> <!-- Other - White -->
+    <li data-color-name="Grey" style="background-color: #a2a9ad;"></li> <!-- Blue -->
+    <li data-color-name="Black" style="background-color: #0D131A;"></li> <!-- Other - Black -->
+    <li data-color-name="Dark Grey" style="background-color: #373a36;"></li> <!-- Green -->
+    <li data-color-name="Brown" style="background-color: #513629;"></li>
+    <li data-color-name="Vegas Khaki" style="background-color: #d0b787;"></li> <!-- Orange -->
+    <li data-color-name="Metallic Gold" style="background-color: #85714D;"></li> <!-- Orange -->
+    <li data-color-name="Navy Blue" style="background-color: #12284b;"></li> <!-- Dark Blue -->
+    <li data-color-name="Forest Green" style="background-color: #114734;"></li> <!-- Green -->
+    <li data-color-name="Kelly Green" style="background-color: #007940;"></li> <!-- Dark Green -->
+    <li data-color-name="Deep Teal ┈┈┈┈ Philly Eagles" style="background-color: #006271;"></li> <!-- Blue -->
+    <li data-color-name="Light Teal ┈┈┈┈ Miami Dolphins" style="background-color: #00b1bd;"></li> <!-- Blue -->
+    <li data-color-name="Nike Carolina" style="background-color: #6fa2e4;"></li> <!-- Light Blue -->
+    <li data-color-name="Hopkins Blue" style="background-color: #418fde;"></li> <!-- Sky Blue -->
+    <li data-color-name="Nike Cobalt ┈┈┈┈ Duke" style="background-color: #174293;"></li> <!-- Blue -->
+    <li data-color-name="Cascade Carolina" style="background-color: #6dd6ff;"></li> <!-- Indigo-ish Blue -->
+    <li data-color-name="Seafoam ┈┈┈┈ Sweetlax" style="background-color: #80fff3;"></li> <!-- Blue -->
+    <li data-color-name="Lime Green ┈┈┈┈ True" style="background-color: #93d500;"></li> <!-- Light Yellow -->
+    <li data-color-name="Electric Green ┈┈┈┈ 802" style="background-color: #03db48;"></li> <!-- Green -->
+    <li data-color-name="Athletic Gold ┈┈┈┈ Packers" style="background-color: #ffb71b;"></li>
+    <li data-color-name="Yellow   " style="background-color: #fff200;"></li> <!-- Yellow -->
+    <li data-color-name="Nike Orange" style="background-color: #ee3724;"></li> <!-- Red-Orange -->
+    <li data-color-name="Cascade Orange" style="background-color: #ff5219;"></li> <!-- Orange -->
+    <li data-color-name="Tennesee Orange" style="background-color: #FF8200;"></li> <!-- Orange -->
+    <li data-color-name="Purple ┈┈┈┈ LSU" style="background-color: #592d82;"></li> <!-- Violet -->
+    <li data-color-name="Hot Pink" style="background-color: #f732a1;"></li> <!-- Magenta -->
+    <li data-color-name="Light Pink" style="background-color: #ffa5d8;"></li> <!-- Magenta -->
+    <li data-color-name="Burgundy" style="background-color: #6e0624;"></li> <!-- Magenta -->
+    <li data-color-name="Deep Burgundy" style="background-color: #50131f;"></li> <!-- Other -->
+    <li data-color-name="Crimson ┈┈┈┈ Harvard" style="background-color: #A41034;"></li> <!-- Other -->
+    <li data-color-name="Scarlet Red ┈┈┈┈ Rutgers" style="background-color: #d00120;"></li> <!-- Other -->
+    <li data-color-name="Texas Orange" style="background-color: #CD5A13;"></li> <!-- Orange-ish Red --></div>
+        
+
+
+        <button onclick="downloadSVG()" class="downloadBtn">Download SVG</button>
+    </div></div>
+    <script src="script.js"></script>
 </body>
 </html>
