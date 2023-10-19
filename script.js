@@ -170,20 +170,21 @@ function applyColorToTextSVG(color) {
 
 
 function downloadMergedSVG() {
-    // Get the main SVG and the text SVG
-    const mainSVG = document.querySelector('.svg-container svg');
-    const textSVGContainer = document.querySelector('.svg-container .text-svg-container');
+    // Get the SVG container, main SVG, and text SVG
+    const svgContainer = document.querySelector('.svg-container');
+    const mainSVG = svgContainer.querySelector('svg:not(.text-svg)');
+    const textSVGContainer = svgContainer.querySelector('.text-svg-container');
     const textSVG = textSVGContainer.querySelector('svg');
 
     if (!mainSVG || !textSVG) return;
 
-    // Get bounding box of both SVGs
-    const mainBBox = mainSVG.getBoundingClientRect();
-    const textBBox = textSVGContainer.getBoundingClientRect(); // Note: We're using the container's bounding box
+    // Get bounding box of the SVG container and text SVG container
+    const containerBBox = svgContainer.getBoundingClientRect();
+    const textBBox = textSVGContainer.getBoundingClientRect();
 
-    // Calculate relative position of text SVG to main SVG
-    const relativeX = textBBox.left - mainBBox.left;
-    const relativeY = textBBox.top - mainBBox.top;
+    // Calculate the position of the text SVG relative to the SVG container
+    const relativeX = textBBox.left - containerBBox.left;
+    const relativeY = textBBox.top - containerBBox.top;
 
     // Clone the main SVG so we don't modify the original
     const clonedSVG = mainSVG.cloneNode(true);
@@ -196,16 +197,10 @@ function downloadMergedSVG() {
     // Append the adjusted text SVG to the cloned main SVG
     clonedSVG.appendChild(clonedTextSVG);
 
-    // Compute the viewBox dimensions to ensure both SVGs fit
-    const minX = 0; // Starting from the left edge of the main SVG
-    const minY = 0; // Starting from the top edge of the main SVG
-    const width = Math.max(mainBBox.width, relativeX + textBBox.width);
-    const height = Math.max(mainBBox.height, relativeY + textBBox.height);
-
-    // Set the dimensions and viewBox of the cloned SVG
-    clonedSVG.setAttribute('width', width.toString());
-    clonedSVG.setAttribute('height', height.toString());
-    clonedSVG.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
+    // Set the dimensions and viewBox of the cloned SVG based on the SVG container's dimensions
+    clonedSVG.setAttribute('width', containerBBox.width.toString());
+    clonedSVG.setAttribute('height', containerBBox.height.toString());
+    clonedSVG.setAttribute('viewBox', `0 0 ${containerBBox.width} ${containerBBox.height}`);
 
     // Create a blob with the SVG data
     const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
