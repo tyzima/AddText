@@ -169,7 +169,6 @@ function applyColorToTextSVG(color) {
 }
 
 
-
 function downloadMergedSVG() {
     // Get the main SVG and the text SVG
     const mainSVG = document.querySelector('.svg-container svg');
@@ -180,25 +179,26 @@ function downloadMergedSVG() {
 
     // Get bounding box of both SVGs
     const mainBBox = mainSVG.getBoundingClientRect();
-    const textBBox = textSVG.getBoundingClientRect();
+    const textBBox = textSVGContainer.getBoundingClientRect(); // Note: We're using the container's bounding box
 
-    // Compute minimum and maximum coordinates
-    const minX = Math.min(mainBBox.left, textBBox.left);
-    const minY = Math.min(mainBBox.top, textBBox.top);
-    const maxX = Math.max(mainBBox.right, textBBox.right);
-    const maxY = Math.max(mainBBox.bottom, textBBox.bottom);
-
-    // Calculate width and height of the combined SVG content
-    const combinedWidth = maxX - minX;
-    const combinedHeight = maxY - minY;
+    // Calculate relative position of text SVG to main SVG
+    const relativeX = textBBox.left - mainBBox.left;
+    const relativeY = textBBox.top - mainBBox.top;
 
     // Clone the main SVG so we don't modify the original
     const clonedSVG = mainSVG.cloneNode(true);
-    
-    // Append the text SVG to the cloned main SVG
-    clonedSVG.appendChild(textSVG.cloneNode(true));
+
+    // Clone the text SVG and adjust its x and y attributes
+    const clonedTextSVG = textSVG.cloneNode(true);
+    clonedTextSVG.setAttribute('x', relativeX);
+    clonedTextSVG.setAttribute('y', relativeY);
+
+    // Append the adjusted text SVG to the cloned main SVG
+    clonedSVG.appendChild(clonedTextSVG);
 
     // Set the dimensions and viewBox of the cloned SVG
+    const combinedWidth = Math.max(mainBBox.width, relativeX + textBBox.width);
+    const combinedHeight = Math.max(mainBBox.height, relativeY + textBBox.height);
     clonedSVG.setAttribute('width', combinedWidth.toString());
     clonedSVG.setAttribute('height', combinedHeight.toString());
     clonedSVG.setAttribute('viewBox', `0 0 ${combinedWidth} ${combinedHeight}`);
