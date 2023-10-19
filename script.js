@@ -196,12 +196,16 @@ function downloadMergedSVG() {
     // Append the adjusted text SVG to the cloned main SVG
     clonedSVG.appendChild(clonedTextSVG);
 
+    // Compute the viewBox dimensions to ensure both SVGs fit
+    const minX = 0; // Starting from the left edge of the main SVG
+    const minY = 0; // Starting from the top edge of the main SVG
+    const width = Math.max(mainBBox.width, relativeX + textBBox.width);
+    const height = Math.max(mainBBox.height, relativeY + textBBox.height);
+
     // Set the dimensions and viewBox of the cloned SVG
-    const combinedWidth = Math.max(mainBBox.width, relativeX + textBBox.width);
-    const combinedHeight = Math.max(mainBBox.height, relativeY + textBBox.height);
-    clonedSVG.setAttribute('width', combinedWidth.toString());
-    clonedSVG.setAttribute('height', combinedHeight.toString());
-    clonedSVG.setAttribute('viewBox', `0 0 ${combinedWidth} ${combinedHeight}`);
+    clonedSVG.setAttribute('width', width.toString());
+    clonedSVG.setAttribute('height', height.toString());
+    clonedSVG.setAttribute('viewBox', `${minX} ${minY} ${width} ${height}`);
 
     // Create a blob with the SVG data
     const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
