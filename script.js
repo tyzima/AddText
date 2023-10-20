@@ -168,47 +168,32 @@ function applyColorToTextSVG(color) {
     }
 }
 
-
-function downloadMergedSVG() {
-    // Get the SVG container, main SVG, and text SVG
+function downloadTrueVectorSVG() {
+    // Get the main SVG and the text SVG
     const svgContainer = document.querySelector('.svg-container');
     const mainSVG = svgContainer.querySelector('svg:not(.text-svg)');
-    const textSVGContainer = svgContainer.querySelector('.text-svg-container');
-    const textSVG = textSVGContainer.querySelector('svg');
+    const textSVG = svgContainer.querySelector('.text-svg');
 
-    if (!mainSVG || !textSVG) return;
+    if (!mainSVG) return;
 
-    // Get bounding box of the SVG container and text SVG container
-    const containerBBox = svgContainer.getBoundingClientRect();
-    const textBBox = textSVGContainer.getBoundingClientRect();
+    // Create a new SVG for the export
+    const exportSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    
+    // Append cloned versions of the main SVG and text SVG (if it exists)
+    exportSVG.appendChild(mainSVG.cloneNode(true));
+    if (textSVG) {
+        exportSVG.appendChild(textSVG.cloneNode(true));
+    }
 
-    // Calculate the position of the text SVG relative to the SVG container
-    const relativeX = textBBox.left - containerBBox.left;
-    const relativeY = textBBox.top - containerBBox.top;
-
-    // Clone the main SVG so we don't modify the original
-    const clonedSVG = mainSVG.cloneNode(true);
-    clonedSVG.setAttribute('width', '100%');
-    clonedSVG.setAttribute('height', '100%');
-
-    // Clone the text SVG and adjust its x and y attributes
-    const clonedTextSVG = textSVG.cloneNode(true);
-    clonedTextSVG.setAttribute('x', relativeX);
-    clonedTextSVG.setAttribute('y', relativeY);
-
-    // Append the adjusted text SVG to the cloned main SVG
-    clonedSVG.appendChild(clonedTextSVG);
-
-    // Set the dimensions and viewBox of the cloned SVG based on the SVG container's dimensions
-    clonedSVG.setAttribute('width', containerBBox.width.toString());
-    clonedSVG.setAttribute('height', containerBBox.height.toString());
-    clonedSVG.setAttribute('viewBox', `0 0 ${containerBBox.width} ${containerBBox.height}`);
-
-    // Create a blob with the SVG data
-    const blob = new Blob([clonedSVG.outerHTML], {type: 'image/svg+xml;charset=utf-8'});
+    // Calculate dimensions and viewBox
+    const containerBounds = svgContainer.getBoundingClientRect();
+    exportSVG.setAttribute('width', `${containerBounds.width}`);
+    exportSVG.setAttribute('height', `${containerBounds.height}`);
+    exportSVG.setAttribute('viewBox', `0 0 ${containerBounds.width} ${containerBounds.height}`);
+    
+    // Generate blob and download
+    const blob = new Blob([new XMLSerializer().serializeToString(exportSVG)], {type: 'image/svg+xml;charset=utf-8'});
     const url = URL.createObjectURL(blob);
-
-    // Create a temporary anchor element to initiate the download
     const a = document.createElement('a');
     a.href = url;
     a.download = 'merged-logo.svg';
